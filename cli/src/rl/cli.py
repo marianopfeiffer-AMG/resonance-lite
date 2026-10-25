@@ -22,6 +22,7 @@ from rl.secrets import KNOWN_KEYS, delete_secret, has_secret, prompt_secret, set
 from rl.stage import derive_stage
 from rl.state import StateStore, now_iso
 from rl.validate import validate_plan
+from rl.visual.step import VisualStep, run_still
 
 EXIT_USAGE = int(ExitCode.USAGE)
 
@@ -209,6 +210,43 @@ def cmd_audio(args: argparse.Namespace) -> int:
     return ExitCode.OK
 
 
+def cmd_still(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    state = run_still(job, load_plan(job), reroll=args.reroll)
+    _emit(args, state, f"Still ready: {state.get('output')}")
+    return ExitCode.OK
+
+
+def cmd_approve(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    plan = load_plan(job)
+    store = StateStore(job)
+    validated, still = store.read("validate"), store.read("still")
+    current = plan_hash(plan)
+    if not (validated.get("ok") and validated.get("plan_hash") == current):
+        raise ConfigError("The current plan is not validated.", hint="Run `rlite validate <job>`.")
+    if still.get("status") != "done":
+        raise ConfigError(
+            "There is no still yet.", hint="Run `rlite still <job>` and show it to the user."
+        )
+    record = {
+        "plan_hash": current,
+        "still_sha256": still["sha256"],
+        "approved_at": now_iso(),
+        "by": "user",
+    }
+    store.replace("approval", record)
+    _emit(args, record, f"Approved {job.name}. Production can start.")
+    return ExitCode.OK
+
+
+def cmd_visual(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    state = VisualStep(job, load_plan(job)).run(regen_stale=args.regen_stale)
+    _emit(args, state, f"Visual ready ({state.get('kind')}): {state.get('output')}")
+    return ExitCode.OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="rlite", description="Resonance Lite CLI")
     parser.add_argument("--version", action="version", version=f"rlite {__version__}")
@@ -244,6 +282,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_prov = add("providers", cmd_providers, "list, enable or disable optional providers")
     p_prov.add_argument("action", nargs="?", default="list", choices=["list", "enable", "disable"])
     p_prov.add_argument("name", nargs="?", default="suno")
+
+    p_still = add("still", cmd_still, "generate the still image shown at the checkpoint")
+    p_still.add_argument("job")
+    p_still.add_argument("--reroll", action="store_true", help="generate a new still (~2 credits)")
+    add("approve", cmd_approve, "record the user's approval of plan + still").add_argument("job")
+    p_vis = add("visual", cmd_visual, "generate the animated loop (after approval)")
+    p_vis.add_argument("job")
+    p_vis.add_argument("--regen-stale", action="store_true", help="regenerate changed paid clips")
 
     p_aud = add("audio", cmd_audio, "generate missing audio items and assemble the bed/mix")
     p_aud.add_argument("job")

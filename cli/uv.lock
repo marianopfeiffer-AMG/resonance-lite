@@ -593,6 +593,8 @@ stabilize = [
 [package.dev-dependencies]
 dev = [
     { name = "mypy" },
+    { name = "numpy" },
+    { name = "opencv-python-headless" },
     { name = "pytest" },
     { name = "responses" },
     { name = "ruff" },
@@ -616,6 +618,8 @@ provides-extras = ["stabilize"]
 [package.metadata.requires-dev]
 dev = [
     { name = "mypy", specifier = ">=1.13,<2" },
+    { name = "numpy", specifier = ">=2,<3" },
+    { name = "opencv-python-headless", specifier = ">=4.10,<5" },
     { name = "pytest", specifier = ">=8,<9" },
     { name = "responses", specifier = ">=0.25,<1" },
     { name = "ruff", specifier = ">=0.8,<1" },

@@ -50,3 +50,48 @@ def noise(path: Path, seconds: float, color: str = "pink", amplitude: float = 0.
         check=True,
     )
     return path
+
+
+def image(path: Path, color: str = "0x335577") -> Path:
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-nostdin",
+            "-y",
+            "-v",
+            "error",
+            "-f",
+            "lavfi",
+            "-i",
+            f"color=c={color}:s=1920x1080",
+            "-frames:v",
+            "1",
+            str(path),
+        ],
+        check=True,
+    )
+    return path
+
+
+def video(path: Path, seconds: float = 5, size: str = "1280x720") -> Path:
+    """Textured moving test video (gives optical flow something to track)."""
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-nostdin",
+            "-y",
+            "-v",
+            "error",
+            "-f",
+            "lavfi",
+            "-i",
+            f"testsrc2=size={size}:rate=24:duration={seconds}",
+            "-c:v",
+            "libx264",
+            "-pix_fmt",
+            "yuv420p",
+            str(path),
+        ],
+        check=True,
+    )
+    return path

@@ -66,14 +66,14 @@
 - [x] Tests con audio sintético (tonos/ruido): anillo sin clic, período combinado, exclude sin regenerar, DP con casos conocidos — commit: `test(audio): synthetic audio pipeline tests`
 
 ## Fase 5 — Visual
-- [ ] `rl/visual/still.py` + `rl still <job> [--reroll]` — §4.6 — commit: `feat(visual): still generation`
-- [ ] `rl/visual/chain.py`: cadena de clips desde el último frame (port de `chain.sh` a Python), reanudable por id — §4.6 — commit: `feat(visual): resumable clip chain`
-- [ ] `rl/visual/ring.py`: clip de cierre (start = último frame de clip_N, end = primer frame de clip_01) + concat con micro-crossfade — §4.6 — commit: `feat(visual): closed-ring loop clip`
-- [ ] `rl/visual/stabilize_close.py`: port parametrizado (un warp LANCZOS4, un encode) — §4.6 — commit: `feat(visual): single-pass stabilize and close`
-- [ ] Encode final del loop (crf 20 veryfast, recorte del frame duplicado) — §4.6 — commit: `feat(visual): final loop encode`
-- [ ] Tier `byo` (imagen y clip) con copia al job — §4.6 — commit: `feat(visual): bring-your-own media tier`
-- [ ] `rl visual <job>` — commit: `feat(cli): add visual command`
-- [ ] Tests con video sintético: cruce del loop ≤ 1,1× el movimiento normal, nitidez ≥ 75% — commit: `test(visual): loop seam and sharpness checks`
+- [x] `rl/visual/still.py` + `rl still <job> [--reroll]` — §4.6 — commit: `feat(visual): still generation`
+- [x] `rl/visual/chain.py`: cadena de clips desde el último frame (port de `chain.sh` a Python), reanudable por id — §4.6 — commit: `feat(visual): resumable clip chain`
+- [x] `rl/visual/ring.py`: clip de cierre (start = último frame de clip_N, end = primer frame de clip_01) + concat con micro-crossfade — §4.6 — commit: `feat(visual): closed-ring loop clip`
+- [x] `rl/visual/stabilize_close.py`: port parametrizado (un warp LANCZOS4, un encode) — §4.6 — commit: `feat(visual): single-pass stabilize and close`
+- [x] Encode final del loop (crf 20 veryfast, recorte del frame duplicado) — §4.6 — commit: `feat(visual): final loop encode`
+- [x] Tier `byo` (imagen y clip) con copia al job — §4.6 — commit: `feat(visual): bring-your-own media tier`
+- [x] `rl visual <job>` — commit: `feat(cli): add visual command`
+- [x] Tests con video sintético: cruce del loop ≤ 1,1× el movimiento normal, nitidez ≥ 75% — commit: `test(visual): loop seam and sharpness checks`
 
 ## Fase 6 — Build, QC y entregables
 - [ ] `rl/build.py`: tile `-c copy` + mux del audio, `.partial` + validación ffprobe ±0,5 s; tier `still` con `-loop 1 -tune stillimage` — §4.7 — commit: `feat(build): tile-copy master assembly`
@@ -83,7 +83,7 @@
 - [ ] Tests end-to-end con medios sintéticos y proveedores mockeados: `new → … → final/` — commit: `test: end-to-end pipeline with mocks`
 
 ## Fase 7 — Orquestación
-- [ ] `rl approve <job>` (hash del plan + sha del still) — §4.5 — commit: `feat(cli): record approvals`
+- [x] `rl approve <job>` (hash del plan + sha del still) — §4.5 — commit: `feat(cli): record approvals`
 - [ ] `rl/detach.py` + `rl run [--detach] [--from] [--regen-stale]`: audio ∥ visual → build → qc, `start_new_session`, pidfile, heartbeat — §3.2, §9 — commit: `feat(run): detached orchestrated run`
 - [ ] `caffeinate -ims -w <pid>` en darwin + aviso de batería (`pmset -g batt`) — §9 — commit: `feat(run): keep mac awake during runs`
 - [ ] `rl wait <job> [--timeout]` (0 / 11 / código de error) — §5 — commit: `feat(cli): add wait command`
