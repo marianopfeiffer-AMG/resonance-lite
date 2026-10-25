@@ -97,9 +97,9 @@
 - [x] `rl next` (backlog) — §3.3 — commit: `feat(cli): pick next backlog idea`
 
 ## Fase 9 — Skill y knowledge
-- [ ] `plugin/skills/resonance-lite/SKILL.md`: flujo §3.2, subcomandos `setup` / `demo` / `resume` / `next`, tablas 4.2 y 4.3.0, manejo de cada código de salida, reglas duras de §6, `allowed-tools: Bash(rl:*), Bash(rlite:*), Read, Write, Edit` — commit: `feat(plugin): add resonance-lite skill`
-- [ ] Portar `COMPOSITION-RULES.md` (regla 2 reescrita según §4.3.0) y `AUDIENCE-SEO.md` (sin 4K, sin marca) con encabezado de atribución — §6, §10.4 — commit: `feat(plugin): port composition and audience knowledge`
-- [ ] Portar `PLAYLIST-COMPOSITION.md`, `motion-safe.md`, `prompt-templates.md` + escribir `niches-seed.md` — §6, §13.2 — commit: `feat(plugin): port playlist and visual knowledge`
+- [x] `plugin/skills/resonance-lite/SKILL.md`: flujo §3.2, subcomandos `setup` / `demo` / `resume` / `next`, tablas 4.2 y 4.3.0, manejo de cada código de salida, reglas duras de §6, `allowed-tools: Bash(rl:*), Bash(rlite:*), Read, Write, Edit` — commit: `feat(plugin): add resonance-lite skill`
+- [x] Portar `COMPOSITION-RULES.md` (regla 2 reescrita según §4.3.0) y `AUDIENCE-SEO.md` (sin 4K, sin marca) con encabezado de atribución — §6, §10.4 — commit: `feat(plugin): port composition and audience knowledge`
+- [x] Portar `PLAYLIST-COMPOSITION.md`, `motion-safe.md`, `prompt-templates.md` + escribir `niches-seed.md` — §6, §13.2 — commit: `feat(plugin): port playlist and visual knowledge`
 - [ ] Revisión manual de Nano de todo el knowledge portado **(Nano)** — §15.4
 
 ## Fase 10 — Documentación y ejemplos

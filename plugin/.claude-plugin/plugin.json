@@ -9,7 +9,14 @@
   },
   "repository": "https://github.com/marianopfeiffer-AMG/resonance-lite",
   "license": "MIT",
-  "keywords": ["youtube", "ambient", "sleep", "music", "asmr", "elevenlabs"],
+  "keywords": [
+    "youtube",
+    "ambient",
+    "sleep",
+    "music",
+    "asmr",
+    "elevenlabs"
+  ],
   "metadata": {
     "requires_cli": ">=0.1,<1.0"
   }
