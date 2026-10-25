@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read  # gitleaks-action lists PR commits
 
 jobs:
   plugin-markdown-only:
@@ -48,7 +49,7 @@ jobs:
         run: |
           patterns='/Users/|sk_[A-Za-z0-9]{16,}|afk_[A-Za-z0-9]{8,}|ya29\.'
           [ -n "$PRIVATE_PATTERNS" ] && patterns="$patterns|$PRIVATE_PATTERNS"
-          if git grep -nE "$patterns" -- . ':!.github/workflows/guard.yml'; then
+          if git grep -nE "$patterns" -- . ':!.github/workflows/guard.yml' ':!.githooks/pre-commit'; then
             echo "Private reference or secret-like pattern found"; exit 1
           fi
       - name: Internal design docs never committed
