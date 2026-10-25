@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Blocks commits that contain secrets, personal paths or private infrastructure references.
+# Enable once per clone: git config core.hooksPath .githooks
+# Private patterns are read from a local file outside the repository (never committed).
+set -euo pipefail
+
+patterns='/Users/|sk_[A-Za-z0-9]{16,}|afk_[A-Za-z0-9]{8,}|ya29\.|gho_[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----'
+private_file="${RL_LEAK_PATTERNS_FILE:-$HOME/.config/resonance-lite-dev/leak-patterns}"
+if [ -f "$private_file" ]; then
+  patterns="$patterns|$(tr -d '\n' < "$private_file")"
+fi
+
+if git diff --cached -U0 --no-color -- . ':!.githooks/pre-commit' ':!.github/workflows/guard.yml' \
+    | grep -E '^\+' | grep -vE '^\+\+\+' | grep -nE "$patterns"; then
+  echo "pre-commit: blocked — secret, personal path or private reference in staged changes." >&2
+  exit 1
+fi
+
+for f in SPEC.md CAVEMAN.md; do
+  if git diff --cached --name-only | grep -qx "$f"; then
+    echo "pre-commit: blocked — $f is an internal document and must never be committed." >&2
+    exit 1
+  fi
+done
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --pre-commit --staged --redact --no-banner -v >/dev/null || {
+    echo "pre-commit: blocked by gitleaks (run 'gitleaks git --pre-commit --staged -v' for details)." >&2
+    exit 1
+  }
+fi

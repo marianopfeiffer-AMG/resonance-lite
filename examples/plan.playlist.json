@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "idea": "lofi study playlist, 2 hours",
+  "mode": "playlist",
+  "engine": "elevenlabs",
+  "use": "focus",
+  "target_duration_s": 7200,
+  "concept": "Two hours of warm lofi jazz for studying. Constant intensity: the variety comes from rotating solo instruments, never from energy.",
+  "audio": {
+    "tracks": [
+      {
+        "id": "t01",
+        "title": "Track 01",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, nylon guitar solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t02",
+        "title": "Track 02",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, muted trumpet solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t03",
+        "title": "Track 03",
+        "style": "warm lofi jazz hip hop, 72 BPM, mellow, relaxed, vibraphone solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t04",
+        "title": "Track 04",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, upright piano solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t05",
+        "title": "Track 05",
+        "style": "warm lofi jazz hip hop, 69 BPM, mellow, relaxed, flute solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t06",
+        "title": "Track 06",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, clean electric guitar solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t07",
+        "title": "Track 07",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, kalimba solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t08",
+        "title": "Track 08",
+        "style": "warm lofi jazz hip hop, 72 BPM, mellow, relaxed, alto sax solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t09",
+        "title": "Track 09",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, wurlitzer solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t10",
+        "title": "Track 10",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, cello solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t11",
+        "title": "Track 11",
+        "style": "warm lofi jazz hip hop, 69 BPM, mellow, relaxed, harp solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t12",
+        "title": "Track 12",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, rhodes solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t13",
+        "title": "Track 13",
+        "style": "warm lofi jazz hip hop, 72 BPM, mellow, relaxed, nylon guitar solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t14",
+        "title": "Track 14",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, muted trumpet solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t15",
+        "title": "Track 15",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, vibraphone solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t16",
+        "title": "Track 16",
+        "style": "warm lofi jazz hip hop, 69 BPM, mellow, relaxed, upright piano solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t17",
+        "title": "Track 17",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, flute solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t18",
+        "title": "Track 18",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, clean electric guitar solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t19",
+        "title": "Track 19",
+        "style": "warm lofi jazz hip hop, 72 BPM, mellow, relaxed, kalimba solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t20",
+        "title": "Track 20",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, alto sax solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t21",
+        "title": "Track 21",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, wurlitzer solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t22",
+        "title": "Track 22",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, cello solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t23",
+        "title": "Track 23",
+        "style": "warm lofi jazz hip hop, 69 BPM, mellow, relaxed, harp solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t24",
+        "title": "Track 24",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, rhodes solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t25",
+        "title": "Track 25",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, nylon guitar solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t26",
+        "title": "Track 26",
+        "style": "warm lofi jazz hip hop, 72 BPM, mellow, relaxed, muted trumpet solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t27",
+        "title": "Track 27",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, vibraphone solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t28",
+        "title": "Track 28",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, upright piano solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t29",
+        "title": "Track 29",
+        "style": "warm lofi jazz hip hop, 69 BPM, mellow, relaxed, flute solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t30",
+        "title": "Track 30",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, clean electric guitar solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t31",
+        "title": "Track 31",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, kalimba solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t32",
+        "title": "Track 32",
+        "style": "warm lofi jazz hip hop, 72 BPM, mellow, relaxed, alto sax solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t33",
+        "title": "Track 33",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, wurlitzer solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t34",
+        "title": "Track 34",
+        "style": "warm lofi jazz hip hop, 71 BPM, mellow, relaxed, cello solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t35",
+        "title": "Track 35",
+        "style": "warm lofi jazz hip hop, 70 BPM, mellow, relaxed, harp solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      },
+      {
+        "id": "t36",
+        "title": "Track 36",
+        "style": "warm lofi jazz hip hop, 69 BPM, mellow, relaxed, rhodes solo, soft brushed drums, round bass, vinyl crackle, instrumental",
+        "instrumental": true,
+        "duration_s": 240
+      }
+    ],
+    "bpm_band": [
+      69,
+      72
+    ]
+  },
+  "assembly": {
+    "exclude": [],
+    "crossfade_s": 8,
+    "lufs": -14,
+    "acts": {
+      "t01": "I · Morning desk",
+      "t13": "II · Afternoon notes",
+      "t25": "III · Night session"
+    }
+  },
+  "visual": {
+    "tier": "still",
+    "image_prompt": "cozy study desk by a rainy window, warm lamp, open notebook, steaming tea, city lights blurred outside, cinematic, photorealistic, wide 16:9"
+  },
+  "metadata": {
+    "title": "Lofi Study Mix 📚 {duration} | Focus, Study, Work",
+    "description": "Warm lofi jazz for deep focus. Chapters below.",
+    "tags": [
+      "lofi",
+      "study music",
+      "focus music",
+      "lofi jazz",
+      "chill beats"
+    ],
+    "category_id": "10",
+    "made_for_kids": false,
+    "default_language": "en",
+    "synthetic_media": true
+  }
+}

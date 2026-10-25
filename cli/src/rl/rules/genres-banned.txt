@@ -1,0 +1,8 @@
+# Style lock: never drift into dance music in playlists or focus music.
+house
+edm
+dance
+techno
+trance
+four-on-the-floor
+dubstep

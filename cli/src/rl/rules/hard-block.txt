@@ -1,0 +1,9 @@
+# Terms that always produce booms. Blocked in audio prompts unless negated ("no explosions").
+explosion
+explosions
+burst
+bursts
+bang
+bangs
+blast
+gunshot

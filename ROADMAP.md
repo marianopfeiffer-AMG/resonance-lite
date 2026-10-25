@@ -30,18 +30,18 @@
 - [x] Workflow para subir `plugin.json → version` y copiar `compat.toml` a `metadata.requires_cli` y a SKILL.md en cada tag — §10.1 — commit: `ci: sync plugin version and compat range on release`
 
 ## Fase 2 — Núcleo: plan, estado, validación
-- [ ] `schemas/plan.v1.json` completo (modos, engine, use, demo, audio, assembly, visual, metadata) — §4.1 — commit: `feat(schema): add plan v1 json schema`
-- [ ] `schemas/state.v1.json` (ítems con hash, status, provider_job_id, outputs, cost, error) — §4.1 — commit: `feat(schema): add state v1 json schema`
-- [ ] `rl/plan.py`: carga, validación de schema, resolución de `{duration}` — §4.1 — commit: `feat(core): load and resolve plan`
-- [ ] `rl/state.py`: un archivo por paso, escritura atómica (tmp + `os.replace`) bajo `fcntl.flock` — §4.1 — commit: `feat(core): atomic per-step state store`
-- [ ] `rl/locks.py`: locks por paso con `flock` (código 75 si está tomado) — §4.1, §5 — commit: `feat(core): per-step flock locks`
-- [ ] `rl/hashing.py`: hash por ítem según la tabla de §4.1, con invalidación en cascada (still → clips) — commit: `feat(core): per-item input hashing`
-- [ ] `rl/stage.py`: stage derivado del estado + `approval.json` + regla "plan/still cambió → código 12" — §4.5 — commit: `feat(core): derive job stage from state`
-- [ ] `rl/validate.py`: todas las reglas de §4.4 con detección de negaciones, niveles bloquea/advertencia y salida `--json` — commit: `feat(validate): implement plan validation rules`
-- [ ] `knowledge/banned-words.txt` + lista de energía + términos de evento — §4.4 — commit: `feat(validate): add lexical rule lists`
-- [ ] Tests: negaciones ("no sudden sounds" pasa), thunder solo en events, BPM band, título con 4K, demo 10-15 min — commit: `test(validate): cover lexical and structural rules`
-- [ ] `rl/exitcodes.py` + `ArgumentParser.error` → 64 — §5 — commit: `feat(cli): define exit codes`
-- [ ] `rl/cli.py`: `new`, `validate`, `status` (humano y `--json`) — §5 — commit: `feat(cli): add new, validate and status commands`
+- [x] `schemas/plan.v1.json` completo (modos, engine, use, demo, audio, assembly, visual, metadata) — §4.1 — commit: `feat(schema): add plan v1 json schema`
+- [ ] `schemas/state.v1.json` (ítems con hash, status, provider_job_id, outputs, cost, error) — §4.1 — se define cuando existan los ítems reales (Fase 3-5); hoy el estado se valida en código — commit: `feat(schema): add state v1 json schema`
+- [x] `rl/plan.py`: carga, validación de schema, resolución de `{duration}` — §4.1 — commit: `feat(core): load and resolve plan`
+- [x] `rl/state.py`: un archivo por paso, escritura atómica (tmp + `os.replace`) bajo `fcntl.flock` — §4.1 — commit: `feat(core): atomic per-step state store`
+- [x] `rl/locks.py`: locks por paso con `flock` (código 75 si está tomado) — §4.1, §5 — commit: `feat(core): per-step flock locks`
+- [x] `rl/hashing.py`: hash por ítem según la tabla de §4.1, con invalidación en cascada (still → clips) — commit: `feat(core): per-item input hashing`
+- [x] `rl/stage.py`: stage derivado del estado + `approval.json` + regla "plan/still cambió → código 12" — §4.5 — commit: `feat(core): derive job stage from state`
+- [x] `rl/validate.py`: todas las reglas de §4.4 con detección de negaciones, niveles bloquea/advertencia y salida `--json` — commit: `feat(validate): implement plan validation rules`
+- [x] Listas léxicas en `cli/src/rl/rules/*.txt` (dentro del paquete, porque las usa el validador) + lista de energía + términos de evento — §4.4 — commit: `feat(validate): add lexical rule lists`
+- [x] Tests: negaciones ("no sudden sounds" pasa), thunder solo en events, BPM band, título con 4K, demo 10-15 min — commit: `test(validate): cover lexical and structural rules`
+- [x] `rl/exitcodes.py` + `ArgumentParser.error` → 64 — §5 — commit: `feat(cli): define exit codes`
+- [x] `rl/cli.py`: `new`, `validate`, `status` (humano y `--json`) — §5 — commit: `feat(cli): add new, validate and status commands`
 
 ## Fase 3 — Proveedores
 - [ ] `rl/providers/base.py`: interfaces `SoundProvider`, `MusicProvider`, `ImageProvider`/`VideoProvider`, `Publisher`, con `resumable` y tabla de errores → código — §7.0 — commit: `feat(providers): define provider interfaces`
