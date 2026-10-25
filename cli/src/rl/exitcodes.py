@@ -20,6 +20,7 @@ class ExitCode(IntEnum):
     DISK = 32
     STATE_CORRUPT = 33
     PARTIAL = 40
+    QC_FAILED = 41
     USAGE = 64
     LOCKED = 75
 

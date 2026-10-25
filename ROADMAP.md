@@ -76,10 +76,10 @@
 - [x] Tests con video sintético: cruce del loop ≤ 1,1× el movimiento normal, nitidez ≥ 75% — commit: `test(visual): loop seam and sharpness checks`
 
 ## Fase 6 — Build, QC y entregables
-- [ ] `rl/build.py`: tile `-c copy` + mux del audio, `.partial` + validación ffprobe ±0,5 s; tier `still` con `-loop 1 -tune stillimage` — §4.7 — commit: `feat(build): tile-copy master assembly`
-- [ ] `rl/thumbnail.py`: 3 plantillas, duración real, etiqueta por modo, fuentes OFL — §4.7 — commit: `feat(build): templated thumbnails`
-- [ ] `rl/upload_md.py`: `UPLOAD.md` (metadata resuelta, capítulos, sintético, atribución de plan gratis, checklist §13.3) + `provenance.json` — §4.7 — commit: `feat(build): upload sheet and provenance`
-- [ ] `rl/qc.py` + `rl qc <job>`: frames de minutos lejanos + métricas de video y audio (§3.2 paso 10, §4.3.0) — commit: `feat(qc): objective quality checks`
+- [x] `rl/build.py`: tile `-c copy` + mux del audio, `.partial` + validación ffprobe ±0,5 s; tier `still` con `-loop 1 -tune stillimage` — §4.7 — commit: `feat(build): tile-copy master assembly`
+- [x] `rl/thumbnail.py`: 3 plantillas, duración real, etiqueta por modo, fuentes OFL — §4.7 — commit: `feat(build): templated thumbnails`
+- [x] `rl/deliver.py` (antes `upload_md.py`): `UPLOAD.md` (metadata resuelta, capítulos, sintético, atribución de plan gratis, checklist §13.3) + `provenance.json` — §4.7 — commit: `feat(build): upload sheet and provenance`
+- [x] `rl/qc.py` + `rl qc <job>`: frames de minutos lejanos + métricas de video y audio (§3.2 paso 10, §4.3.0) — commit: `feat(qc): objective quality checks`
 - [ ] Tests end-to-end con medios sintéticos y proveedores mockeados: `new → … → final/` — commit: `test: end-to-end pipeline with mocks`
 
 ## Fase 7 — Orquestación

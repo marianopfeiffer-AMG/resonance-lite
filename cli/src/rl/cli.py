@@ -10,6 +10,7 @@ from typing import Any, NoReturn
 from rl import __version__
 from rl.audio.step import AudioStep
 from rl.budget import Budget
+from rl.build import BuildStep
 from rl.config import enabled_providers
 from rl.estimate import estimate
 from rl.exitcodes import ConfigError, ExitCode, RlError
@@ -18,6 +19,7 @@ from rl.paths import jobs_dir, resolve_job
 from rl.plan import load_plan, new_job_id, skeleton
 from rl.providers import registry
 from rl.providers.higgsfield import Higgsfield
+from rl.qc import run_qc
 from rl.secrets import KNOWN_KEYS, delete_secret, has_secret, prompt_secret, set_secret
 from rl.stage import derive_stage
 from rl.state import StateStore, now_iso
@@ -247,6 +249,33 @@ def cmd_visual(args: argparse.Namespace) -> int:
     return ExitCode.OK
 
 
+def cmd_build(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    state = BuildStep(job, load_plan(job)).run()
+    human = (
+        f"Video ready: {state.get('video')} "
+        f"({state.get('duration_s')} s, {state.get('size_mb')} MB)"
+    )
+    for warning in state.get("warnings", []):
+        human += f"\n  warning: {warning}"
+    _emit(args, state, human)
+    return ExitCode.OK
+
+
+def cmd_qc(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    state = run_qc(job, load_plan(job))
+    lines = [f"QC {'PASSED' if state['passed'] else 'FAILED'} for {job.name}"]
+    for c in state["checks"]:
+        mark = "ok  " if c["ok"] else ("FAIL" if c["severity"] == "fail" else "warn")
+        lines.append(f"  {mark} {c['name']}: {c['value']} (expected {c['threshold']})")
+    lines.append("  frames: " + ", ".join(state["frames"]))
+    _emit(args, state, "\n".join(lines))
+    if not state["passed"]:
+        return ExitCode.QC_FAILED
+    return ExitCode.PARTIAL if any(not c["ok"] for c in state["checks"]) else ExitCode.OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="rlite", description="Resonance Lite CLI")
     parser.add_argument("--version", action="version", version=f"rlite {__version__}")
@@ -295,6 +324,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_aud.add_argument("job")
     p_aud.add_argument("--assemble-only", action="store_true", help="re-assemble, generate nothing")
     p_aud.add_argument("--regen-stale", action="store_true", help="regenerate changed paid items")
+
+    add("build", cmd_build, "assemble the final video, thumbnail and upload sheet").add_argument(
+        "job"
+    )
+    add("qc", cmd_qc, "quality checks + frames for review").add_argument("job")
 
     p_bud = add("budget", cmd_budget, "show a job's spend or raise its cap (your terminal only)")
     p_bud.add_argument("action", choices=["show", "allow"])
