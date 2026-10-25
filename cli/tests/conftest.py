@@ -48,3 +48,15 @@ def memory_keyring(monkeypatch: pytest.MonkeyPatch) -> MemoryKeyring:
     backend = MemoryKeyring()
     keyring.set_keyring(backend)
     return backend
+
+
+@pytest.fixture(autouse=True)
+def no_real_provider_logins(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Tests must never reach a real account: block the Higgsfield CLI and the network."""
+    from rl.exitcodes import ConfigError
+
+    def blocked_cli(args: object, timeout: float) -> object:
+        raise ConfigError("Higgsfield CLI is blocked in tests (inject a fake runner)")
+
+    monkeypatch.setattr("rl.providers.higgsfield._run", blocked_cli)
+    monkeypatch.setenv("RL_NO_UPDATE_CHECK", "1")

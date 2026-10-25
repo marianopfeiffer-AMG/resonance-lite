@@ -91,10 +91,10 @@
 - [x] Test de reanudación: matar el run a mitad de la cadena y de Suno → reanudar sin crear jobs nuevos en los mocks — commit: `test(run): resume without double charges`
 
 ## Fase 8 — Setup y diagnóstico
-- [ ] `rl doctor [--quick] [--json] [--report]`: dependencias, versión de Higgsfield, saldos, disco, corriente, calibración, chequeo de versión nueva (tag git en beta / PyPI en público, caché 24 h, `RL_NO_UPDATE_CHECK`) — §5, §10.0.1, §10.2 — commit: `feat(doctor): environment diagnostics`
-- [ ] `rl init [--from-clipboard]`: keys con prompt oculto, `channel.yaml`, `RL_HOME`, `backlog.md` sembrado, aviso de plan gratis — §10.2 — commit: `feat(cli): interactive init`
-- [ ] `rl purge` — §5 — commit: `feat(cli): add purge command`
-- [ ] `rl next` (backlog) — §3.3 — commit: `feat(cli): pick next backlog idea`
+- [x] `rl doctor [--quick] [--json] [--report]`: dependencias, versión de Higgsfield, saldos, disco, corriente, calibración, chequeo de versión nueva (tag git en beta / PyPI en público, caché 24 h, `RL_NO_UPDATE_CHECK`) — §5, §10.0.1, §10.2 — commit: `feat(doctor): environment diagnostics`
+- [x] `rl init`: `channel.yaml`, `RL_HOME` y backlog sembrado; **no maneja claves** (eso es `rlite key set`, que corre el usuario en su terminal), `RL_HOME`, `backlog.md` sembrado, aviso de plan gratis — §10.2 — commit: `feat(cli): interactive init`
+- [x] `rl purge` — §5 — commit: `feat(cli): add purge command`
+- [x] `rl next` (backlog) — §3.3 — commit: `feat(cli): pick next backlog idea`
 
 ## Fase 9 — Skill y knowledge
 - [ ] `plugin/skills/resonance-lite/SKILL.md`: flujo §3.2, subcomandos `setup` / `demo` / `resume` / `next`, tablas 4.2 y 4.3.0, manejo de cada código de salida, reglas duras de §6, `allowed-tools: Bash(rl:*), Bash(rlite:*), Read, Write, Edit` — commit: `feat(plugin): add resonance-lite skill`

@@ -12,6 +12,8 @@ from rl.audio.step import AudioStep
 from rl.budget import Budget
 from rl.build import BuildStep
 from rl.config import enabled_providers
+from rl.doctor import report as doctor_report
+from rl.doctor import run_doctor
 from rl.estimate import estimate
 from rl.exitcodes import ConfigError, ExitCode, RlError
 from rl.hashing import plan_hash
@@ -23,6 +25,7 @@ from rl.providers.higgsfield import Higgsfield
 from rl.qc import run_qc
 from rl.run import detach, run_job, run_status, wait
 from rl.secrets import KNOWN_KEYS, delete_secret, has_secret, prompt_secret, set_secret
+from rl.setup_cmds import init, next_idea, purge
 from rl.stage import derive_stage, require_approval
 from rl.state import StateStore, now_iso
 from rl.validate import validate_plan
@@ -50,21 +53,25 @@ def _emit(args: argparse.Namespace, payload: dict[str, Any], human: str) -> None
         print(human)
 
 
-def cmd_new(args: argparse.Namespace) -> int:
+def _create_job(idea: str, mode: str | None) -> dict[str, str]:
     root = jobs_dir()
     root.mkdir(parents=True, exist_ok=True)
-    base = new_job_id(args.idea)
+    base = new_job_id(idea)
     job_id, n = base, 2
     while (root / job_id).exists():
         job_id, n = f"{base}-{n}", n + 1
     job = root / job_id
     job.mkdir()
     (job / "plan.json").write_text(
-        json.dumps(skeleton(args.idea, args.mode), indent=2, ensure_ascii=False) + "\n",
-        encoding="utf-8",
+        json.dumps(skeleton(idea, mode), indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     StateStore(job)
-    _emit(args, {"job_id": job_id, "path": str(job)}, f"Created job {job_id}\n  {job}/plan.json")
+    return {"job_id": job_id, "path": str(job)}
+
+
+def cmd_new(args: argparse.Namespace) -> int:
+    created = _create_job(args.idea, args.mode)
+    _emit(args, created, f"Created job {created['job_id']}\n  {created['path']}/plan.json")
     return ExitCode.OK
 
 
@@ -315,6 +322,52 @@ def cmd_clean(args: argparse.Namespace) -> int:
     return ExitCode.OK
 
 
+def cmd_doctor(args: argparse.Namespace) -> int:
+    if args.report:
+        result = doctor_report()
+        print(json.dumps(result["report"], indent=2, ensure_ascii=False))
+        return ExitCode.OK
+    result = run_doctor(quick=args.quick)
+    lines = [f"rlite {result['version']}: {'ready' if result['ok'] else 'needs attention'}"]
+    for c in result["checks"]:
+        mark = "ok  " if c["ok"] else ("FAIL" if c["severity"] == "fail" else "warn")
+        lines.append(
+            f"  {mark} {c['name']}: {c['detail']}"
+            + (f"\n       fix: {c['fix']}" if not c["ok"] and c["fix"] else "")
+        )
+    _emit(args, result, "\n".join(lines))
+    return ExitCode.OK if result["ok"] else ExitCode.CONFIG
+
+
+def cmd_init(args: argparse.Namespace) -> int:
+    result = init(args)
+    _emit(
+        args,
+        result,
+        f"Config: {result['channel_yaml']}\nJobs: {result['rl_home']}\nNext: {result['next']}",
+    )
+    return ExitCode.OK
+
+
+def cmd_purge(args: argparse.Namespace) -> int:
+    result = purge()
+    _emit(args, result, "Deleted your keys and config. Jobs were kept.")
+    return ExitCode.OK
+
+
+def cmd_next(args: argparse.Namespace) -> int:
+    idea = next_idea()
+    text = f"{idea['title']} ({idea['seo']})" if idea["seo"] else idea["title"]
+    mode = idea["mode"] if idea["mode"] in ("ambient", "functional", "playlist") else None
+    created = _create_job(text, mode)
+    _emit(
+        args,
+        {**idea, **created},
+        f"Took {idea['code']} · {idea['title']} → job {created['job_id']}",
+    )
+    return ExitCode.OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="rlite", description="Resonance Lite CLI")
     parser.add_argument("--version", action="version", version=f"rlite {__version__}")
@@ -387,6 +440,26 @@ def build_parser() -> argparse.ArgumentParser:
     p_clean.add_argument("job")
     p_clean.add_argument("--keep-final", action="store_true", help="keep final/video.mp4")
     p_clean.add_argument("--force", action="store_true", help="clean even if not delivered")
+
+    p_doc = add("doctor", cmd_doctor, "check this computer and accounts; tell how to fix issues")
+    p_doc.add_argument(
+        "--quick", action="store_true", help="skip network balance checks and calibration"
+    )
+    p_doc.add_argument(
+        "--report", action="store_true", help="sanitized report to paste in an issue"
+    )
+    p_init = add("init", cmd_init, "create config, jobs folder and starter backlog (no keys)")
+    p_init.add_argument("--channel-name")
+    p_init.add_argument("--language")
+    p_init.add_argument("--footer")
+    p_init.add_argument("--visual-tier", choices=["cinemagraph", "still", "byo"])
+    p_init.add_argument("--elevenlabs-plan")
+    p_init.add_argument("--higgsfield-plan")
+    p_init.add_argument("--apiframe-plan")
+    p_init.add_argument("--budget-job", type=float, metavar="USD")
+    p_init.add_argument("--budget-month", type=float, metavar="USD")
+    add("purge", cmd_purge, "delete your keys and config (your terminal only)")
+    add("next", cmd_next, "create a job from the next queued backlog idea")
 
     p_bud = add("budget", cmd_budget, "show a job's spend or raise its cap (your terminal only)")
     p_bud.add_argument("action", choices=["show", "allow"])
