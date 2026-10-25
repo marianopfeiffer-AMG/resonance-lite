@@ -15,7 +15,7 @@ jobs:
     # executables, monitors or shell injection in skills. Code lives only in cli/.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Only .md, .txt and plugin.json inside plugin/
         run: |
           bad=$(find plugin -type f ! -name '*.md' ! -name '*.txt' ! -path 'plugin/.claude-plugin/plugin.json' || true)
@@ -38,7 +38,7 @@ jobs:
   leaks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: No private infrastructure references or key patterns
@@ -57,6 +57,6 @@ jobs:
           if git log --all --name-only --format= | grep -qxE 'SPEC\.md|CAVEMAN\.md'; then
             echo "SPEC.md or CAVEMAN.md exists in git history"; exit 1
           fi
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
