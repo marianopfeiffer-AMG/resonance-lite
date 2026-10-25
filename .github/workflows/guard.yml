@@ -56,6 +56,6 @@ jobs:
           if git log --all --name-only --format= | grep -qxE 'SPEC\.md|CAVEMAN\.md'; then
             echo "SPEC.md or CAVEMAN.md exists in git history"; exit 1
           fi
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
