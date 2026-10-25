@@ -1,0 +1,4 @@
+# Discrete events: only allowed in audio.events (recipe A+), never in continuous clips.
+thunder
+thunderclap
+lightning

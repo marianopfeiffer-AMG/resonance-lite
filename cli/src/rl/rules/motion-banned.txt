@@ -1,0 +1,9 @@
+# Motion that needs to "go back" and reveals the loop (see motion-safe knowledge).
+walking
+person
+people
+pendulum
+swinging
+breaking waves
+running
+dancing

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/marianopfeiffer-AMG/resonance-lite/schemas/plan.v1.json",
+  "title": "Resonance Lite plan (written by Claude)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "idea", "mode", "engine", "use", "target_duration_s", "concept",
+               "audio", "assembly", "visual", "metadata"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "idea": {"type": "string", "minLength": 1},
+    "mode": {"enum": ["ambient", "functional", "playlist"]},
+    "engine": {"enum": ["elevenlabs", "suno"]},
+    "use": {"enum": ["sleep", "baby", "focus", "relax"]},
+    "target_duration_s": {"type": "integer", "minimum": 60},
+    "demo": {"type": "boolean"},
+    "concept": {"type": "string", "minLength": 1},
+    "audio": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "clips": {"type": "array", "items": {"$ref": "#/$defs/promptItem"}},
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "prompt", "every_s", "gain_db"],
+            "properties": {
+              "id": {"$ref": "#/$defs/id"},
+              "prompt": {"type": "string", "minLength": 1},
+              "every_s": {"type": "array", "items": {"type": "number", "exclusiveMinimum": 0},
+                          "minItems": 2, "maxItems": 2},
+              "gain_db": {"type": "number", "maximum": -12}
+            }
+          }
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "prompt", "duration_s"],
+            "properties": {
+              "id": {"$ref": "#/$defs/id"},
+              "prompt": {"type": "string", "minLength": 1},
+              "duration_s": {"type": "integer", "minimum": 3, "maximum": 600}
+            }
+          }
+        },
+        "bed_min_s": {"type": "integer", "minimum": 60},
+        "tracks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "style", "instrumental"],
+            "properties": {
+              "id": {"$ref": "#/$defs/id"},
+              "title": {"type": "string", "minLength": 1},
+              "style": {"type": "string", "minLength": 1},
+              "instrumental": {"type": "boolean"},
+              "duration_s": {"type": "integer", "minimum": 30, "maximum": 600},
+              "lyrics": {"type": ["string", "null"]},
+              "vocal_gender": {"enum": ["f", "m", null]}
+            }
+          }
+        },
+        "bpm_band": {"type": "array", "items": {"type": "integer", "minimum": 30, "maximum": 200},
+                     "minItems": 2, "maxItems": 2},
+        "model_version": {"type": "string"}
+      }
+    },
+    "assembly": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "exclude": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+        "crossfade_s": {"type": "number", "minimum": 0, "maximum": 20},
+        "lufs": {"type": "number", "minimum": -30, "maximum": -8},
+        "acts": {"type": "object", "additionalProperties": {"type": "string"}}
+      }
+    },
+    "visual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier"],
+      "properties": {
+        "tier": {"enum": ["cinemagraph", "still", "byo"]},
+        "image_prompt": {"type": "string"},
+        "motion_prompt": {"type": "string"},
+        "n_clips": {"type": "integer", "minimum": 1, "maximum": 12},
+        "mode": {"enum": ["pro", "std"]},
+        "byo_path": {"type": ["string", "null"]}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "description", "tags"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "tags": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "category_id": {"type": "string"},
+        "made_for_kids": {"type": "boolean"},
+        "default_language": {"type": "string"},
+        "synthetic_media": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,31}$"},
+    "promptItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "prompt"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "prompt": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

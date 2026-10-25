@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "idea": "deep sleep piano, 90 minutes",
+  "mode": "functional",
+  "engine": "elevenlabs",
+  "use": "sleep",
+  "target_duration_s": 5400,
+  "concept": "Very slow solo felt piano with warm pads. Gentle bounded waves of intensity, like slow breathing, never peaking, for falling asleep.",
+  "audio": {
+    "sections": [
+      {"id": "s1", "prompt": "very slow solo felt piano, 55 BPM, A minor, warm soft pads, gently swelling and receding, no percussion, instrumental", "duration_s": 300},
+      {"id": "s2", "prompt": "slow felt piano with distant strings, 54 BPM, C major, calm, soft swells, no percussion, instrumental", "duration_s": 300},
+      {"id": "s3", "prompt": "sparse lullaby piano, 52 BPM, F major, warm ambient pad, breathing dynamics, instrumental", "duration_s": 300},
+      {"id": "s4", "prompt": "soft piano and low cello drone, 55 BPM, D minor, tender, gently rising and falling, instrumental", "duration_s": 300},
+      {"id": "s5", "prompt": "slow felt piano arpeggios, 53 BPM, G major, airy pads, soothing, instrumental", "duration_s": 300},
+      {"id": "s6", "prompt": "very quiet piano with warm tape texture, 52 BPM, A minor, fading swells, instrumental", "duration_s": 300},
+      {"id": "s7", "prompt": "minimal piano notes over a soft pad, 54 BPM, E minor, still and calm, instrumental", "duration_s": 300},
+      {"id": "s8", "prompt": "slow felt piano with soft choir pad, 55 BPM, C major, peaceful, gentle swells, instrumental", "duration_s": 300},
+      {"id": "s9", "prompt": "lullaby piano with music box texture, 53 BPM, F major, soft, instrumental", "duration_s": 300}
+    ],
+    "bed_min_s": 2700
+  },
+  "assembly": {"crossfade_s": 4, "lufs": -18},
+  "visual": {
+    "tier": "still",
+    "image_prompt": "moonlit bedroom window with sheer curtains, soft blue night light, a piano silhouette, calm, cinematic, photorealistic, wide 16:9"
+  },
+  "metadata": {
+    "title": "Deep Sleep Piano · {duration} of Calm Felt Piano | Sleep, Relax",
+    "description": "Very slow felt piano to fall asleep. Gentle, continuous, no sudden changes.",
+    "tags": ["sleep music", "deep sleep", "piano", "relaxing music", "insomnia relief"],
+    "category_id": "10",
+    "made_for_kids": false,
+    "default_language": "en",
+    "synthetic_media": true
+  }
+}

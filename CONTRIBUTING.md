@@ -6,7 +6,9 @@ Thanks for helping. Read [CODESTYLE.md](CODESTYLE.md) first: every rule there is
 
 ```bash
 git clone https://github.com/marianopfeiffer-AMG/resonance-lite
-cd resonance-lite/cli
+cd resonance-lite
+git config core.hooksPath .githooks   # blocks commits containing secrets
+cd cli
 uv sync
 uv run pytest
 uv run ruff check . && uv run ruff format --check . && uv run mypy src

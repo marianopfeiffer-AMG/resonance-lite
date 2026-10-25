@@ -1,0 +1,10 @@
+# Terms that often produce jolts. Warning unless negated ("no sudden sounds").
+sudden
+intense
+loud
+crash
+crashing
+collapse
+flare
+boom
+slam

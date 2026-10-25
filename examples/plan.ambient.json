@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "idea": "rain on a tent, 2 hours",
+  "mode": "ambient",
+  "engine": "elevenlabs",
+  "use": "sleep",
+  "target_duration_s": 7200,
+  "concept": "Soft steady rain on a canvas tent in a pine forest at night. Close, enveloping, no surprises: the listener feels sheltered and dry while the rain keeps going.",
+  "audio": {
+    "clips": [
+      {"id": "c1", "prompt": "gentle steady rain on a canvas tent, close up, soft continuous, soothing, no sudden sounds"},
+      {"id": "c2", "prompt": "soft rain pattering on tent fabric, calm, even, immersive ASMR"},
+      {"id": "c3", "prompt": "light rain on canvas with distant soft rain on pine needles, cozy, continuous"},
+      {"id": "c4", "prompt": "steady medium rain on a tent roof, warm, enveloping, no thunder"},
+      {"id": "c5", "prompt": "gentle rain drips from tent edge onto soft ground, calm, continuous"},
+      {"id": "c6", "prompt": "deep continuous rain ambience inside a tent, soft, soothing, white noise like"}
+    ]
+  },
+  "assembly": {"exclude": [], "crossfade_s": 3, "lufs": -18},
+  "visual": {
+    "tier": "cinemagraph",
+    "image_prompt": "inside view of a small camping tent at night, rain streaks on the translucent fabric, warm lantern glow, pine forest silhouettes outside, cinematic, photorealistic, wide 16:9",
+    "motion_prompt": "only the rain streaks on the tent fabric move gently and continuously, lantern glow flickers very slightly, static locked tripod camera, absolutely no camera movement",
+    "n_clips": 6,
+    "mode": "pro"
+  },
+  "metadata": {
+    "title": "Rain on a Tent ⛺ {duration} | Sleep, ASMR, Camping Ambience",
+    "description": "Soft rain on a canvas tent for deep sleep, studying or relaxing. Continuous, seamless, no harsh sounds.",
+    "tags": ["rain sounds", "rain on tent", "sleep sounds", "camping ambience", "asmr", "white noise"],
+    "category_id": "10",
+    "made_for_kids": false,
+    "default_language": "en",
+    "synthetic_media": true
+  }
+}
