@@ -16,7 +16,7 @@ from typing import Any
 
 from rl.exitcodes import StateCorrupt
 
-STEPS = ("validate", "still", "audio", "visual", "build", "qc", "upload", "approval", "cost")
+STEPS = ("validate", "still", "audio", "visual", "build", "qc", "upload", "approval", "cost", "run")
 
 State = dict[str, Any]
 

@@ -80,15 +80,15 @@
 - [x] `rl/thumbnail.py`: 3 plantillas, duración real, etiqueta por modo, fuentes OFL — §4.7 — commit: `feat(build): templated thumbnails`
 - [x] `rl/deliver.py` (antes `upload_md.py`): `UPLOAD.md` (metadata resuelta, capítulos, sintético, atribución de plan gratis, checklist §13.3) + `provenance.json` — §4.7 — commit: `feat(build): upload sheet and provenance`
 - [x] `rl/qc.py` + `rl qc <job>`: frames de minutos lejanos + métricas de video y audio (§3.2 paso 10, §4.3.0) — commit: `feat(qc): objective quality checks`
-- [ ] Tests end-to-end con medios sintéticos y proveedores mockeados: `new → … → final/` — commit: `test: end-to-end pipeline with mocks`
+- [x] Tests end-to-end con medios sintéticos y proveedores mockeados: `new → … → final/` — commit: `test: end-to-end pipeline with mocks`
 
 ## Fase 7 — Orquestación
 - [x] `rl approve <job>` (hash del plan + sha del still) — §4.5 — commit: `feat(cli): record approvals`
-- [ ] `rl/detach.py` + `rl run [--detach] [--from] [--regen-stale]`: audio ∥ visual → build → qc, `start_new_session`, pidfile, heartbeat — §3.2, §9 — commit: `feat(run): detached orchestrated run`
-- [ ] `caffeinate -ims -w <pid>` en darwin + aviso de batería (`pmset -g batt`) — §9 — commit: `feat(run): keep mac awake during runs`
-- [ ] `rl wait <job> [--timeout]` (0 / 11 / código de error) — §5 — commit: `feat(cli): add wait command`
-- [ ] `rl repair <job>` y `rl clean <job> [--keep-final]` — §5 — commit: `feat(cli): add repair and clean commands`
-- [ ] Test de reanudación: matar el run a mitad de la cadena y de Suno → reanudar sin crear jobs nuevos en los mocks — commit: `test(run): resume without double charges`
+- [x] `rl/detach.py` + `rl run [--detach] [--from] [--regen-stale]`: audio ∥ visual → build → qc, `start_new_session`, pidfile, heartbeat — §3.2, §9 — commit: `feat(run): detached orchestrated run`
+- [x] `caffeinate -ims -w <pid>` en darwin + aviso de batería (`pmset -g batt`) — §9 — commit: `feat(run): keep mac awake during runs`
+- [x] `rl wait <job> [--timeout]` (0 / 11 / código de error) — §5 — commit: `feat(cli): add wait command`
+- [x] `rl repair <job>` y `rl clean <job> [--keep-final]` — §5 — commit: `feat(cli): add repair and clean commands`
+- [x] Test de reanudación: matar el run a mitad de la cadena y de Suno → reanudar sin crear jobs nuevos en los mocks — commit: `test(run): resume without double charges`
 
 ## Fase 8 — Setup y diagnóstico
 - [ ] `rl doctor [--quick] [--json] [--report]`: dependencias, versión de Higgsfield, saldos, disco, corriente, calibración, chequeo de versión nueva (tag git en beta / PyPI en público, caché 24 h, `RL_NO_UPDATE_CHECK`) — §5, §10.0.1, §10.2 — commit: `feat(doctor): environment diagnostics`

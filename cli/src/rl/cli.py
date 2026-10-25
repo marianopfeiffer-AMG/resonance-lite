@@ -15,13 +15,15 @@ from rl.config import enabled_providers
 from rl.estimate import estimate
 from rl.exitcodes import ConfigError, ExitCode, RlError
 from rl.hashing import plan_hash
+from rl.maintenance import clean, repair
 from rl.paths import jobs_dir, resolve_job
 from rl.plan import load_plan, new_job_id, skeleton
 from rl.providers import registry
 from rl.providers.higgsfield import Higgsfield
 from rl.qc import run_qc
+from rl.run import detach, run_job, run_status, wait
 from rl.secrets import KNOWN_KEYS, delete_secret, has_secret, prompt_secret, set_secret
-from rl.stage import derive_stage
+from rl.stage import derive_stage, require_approval
 from rl.state import StateStore, now_iso
 from rl.validate import validate_plan
 from rl.visual.step import VisualStep, run_still
@@ -105,7 +107,9 @@ def _job_summary(job: Path) -> dict[str, Any]:
 
 def cmd_status(args: argparse.Namespace) -> int:
     if args.job:
-        summary = _job_summary(resolve_job(args.job))
+        job = resolve_job(args.job)
+        summary = _job_summary(job)
+        summary["run"] = run_status(job)
         steps = "  ".join(f"{k}:{v}" for k, v in summary["steps"].items())
         _emit(
             args,
@@ -276,6 +280,41 @@ def cmd_qc(args: argparse.Namespace) -> int:
     return ExitCode.PARTIAL if any(not c["ok"] for c in state["checks"]) else ExitCode.OK
 
 
+def cmd_run(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    forwarded = ["--from", args.start_from] + (["--regen-stale"] if args.regen_stale else [])
+    if args.detach:
+        require_approval(job, load_plan(job))
+        info = detach(job, forwarded)
+        human = f"Started in the background (pid {info['pid']}). Log: {info['log']}"
+        if info["on_battery"]:
+            human += "\n  warning: on battery. Plug in the computer and keep the lid open."
+        _emit(args, info, human)
+        return ExitCode.OK
+    state = run_job(job, start_from=args.start_from, regen_stale=args.regen_stale)
+    _emit(args, state, f"Run finished: QC {'passed' if state.get('qc_passed') else 'failed'}")
+    return ExitCode.OK if state.get("qc_passed") else ExitCode.QC_FAILED
+
+
+def cmd_wait(args: argparse.Namespace) -> int:
+    code, state = wait(resolve_job(args.job), args.timeout)
+    labels = {0: "done", 11: "still running"}
+    _emit(args, {"code": code, **state}, f"{labels.get(code, 'stopped')}: step {state.get('step')}")
+    return code
+
+
+def cmd_repair(args: argparse.Namespace) -> int:
+    result = repair(resolve_job(args.job))
+    _emit(args, result, result["note"])
+    return ExitCode.OK
+
+
+def cmd_clean(args: argparse.Namespace) -> int:
+    result = clean(resolve_job(args.job), keep_final=args.keep_final, force=args.force)
+    _emit(args, result, f"Removed {len(result['removed'])} items, freed {result['freed_mb']} MB")
+    return ExitCode.OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="rlite", description="Resonance Lite CLI")
     parser.add_argument("--version", action="version", version=f"rlite {__version__}")
@@ -329,6 +368,25 @@ def build_parser() -> argparse.ArgumentParser:
         "job"
     )
     add("qc", cmd_qc, "quality checks + frames for review").add_argument("job")
+
+    p_run = add("run", cmd_run, "audio ∥ visual → build → qc (use --detach)")
+    p_run.add_argument("job")
+    p_run.add_argument(
+        "--detach", action="store_true", help="run in the background, survive closing"
+    )
+    p_run.add_argument(
+        "--from", dest="start_from", default="produce", choices=["produce", "build", "qc"]
+    )
+    p_run.add_argument("--regen-stale", action="store_true")
+    p_run.add_argument("--child", action="store_true", help=argparse.SUPPRESS)
+    p_wait = add("wait", cmd_wait, "wait for a background run (exit 11 = still running)")
+    p_wait.add_argument("job")
+    p_wait.add_argument("--timeout", type=float, default=540)
+    add("repair", cmd_repair, "quarantine unreadable state files").add_argument("job")
+    p_clean = add("clean", cmd_clean, "delete intermediates of a delivered job")
+    p_clean.add_argument("job")
+    p_clean.add_argument("--keep-final", action="store_true", help="keep final/video.mp4")
+    p_clean.add_argument("--force", action="store_true", help="clean even if not delivered")
 
     p_bud = add("budget", cmd_budget, "show a job's spend or raise its cap (your terminal only)")
     p_bud.add_argument("action", choices=["show", "allow"])
