@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-stabilize = ["opencv-python-headless>=4.10,<5", "numpy>=2,<3"]
+stabilize = ["opencv-python-headless>=4.10,<6", "numpy>=2,<3"]
 
 [project.scripts]
 rlite = "rl.cli:main"
