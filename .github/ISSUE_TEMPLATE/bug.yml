@@ -1,0 +1,35 @@
+name: Bug report
+description: Something failed or behaved unexpectedly
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command and exit code
+      placeholder: "rlite run <job> --detach → exit 30"
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `rlite doctor --report`
+      description: It never includes keys or personal paths.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Relevant lines of job.log
+      render: text
+  - type: checkboxes
+    id: money
+    attributes:
+      label: Money
+      options:
+        - label: This bug charged me more than expected (double charge, budget ignored)
