@@ -125,6 +125,7 @@
 - [ ] Verificar los criterios de salida de §10.0.3 (checklist en un issue fijado).
 
 ## Fase 13 — Lanzamiento público
+- [ ] Verificar que ningún ref (incluidos PRs cerrados) contenga commits con el email personal; si los hay, publicar desde un repo nuevo con `main` limpio — §10.0.4 paso 2b.
 - [ ] Ejecutar el checklist de §10.0.4 (gitleaks sobre el historial, trusted publisher, `cli-v1.0.0` a PyPI, README con PyPI, Discussions/stale/smoke test/CodeQL, repo público, migración del amigo).
 - [ ] Workflow de release a PyPI con environment `pypi` + revisor + attestations — §8.1 — commit: `ci: add pypi trusted publishing release`
 - [ ] Workflow de smoke test nocturno **opcional**: solo corre si el mantenedor configura por su cuenta el secret `RL_SECRET_ELEVENLABS`; sin él, se saltea sin fallar — §15.3 — commit: `ci: add optional nightly provider smoke test`
