@@ -1,10 +1,21 @@
 version: 2
 updates:
+  # Python dependencies have explicit upper bounds in pyproject.toml (SPEC 8.1).
+  # Major versions are adopted deliberately, by hand, after testing.
   - package-ecosystem: uv
     directory: /cli
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      python-minor:
+        patterns: ["*"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
