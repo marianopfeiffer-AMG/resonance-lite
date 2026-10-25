@@ -56,14 +56,14 @@
 - [x] Tests de contrato con mocks por proveedor (incluye: el timeout no re-crea el job; quota → 22; Suno sin activar → validate falla) — commit: `test(providers): add contract tests with mocks`
 
 ## Fase 4 — Audio
-- [ ] `rl/audio/common.py`: trim de silencio, crossfade, cierre en anillo, medición de LUFS/peak/silencios — §4.3 — commit: `feat(audio): shared ffmpeg audio helpers`
-- [ ] `rl/audio/ambient.py`: Receta A (3 capas de largos coprimos en anillo, tile con `aloop`, AAC una vez) — §4.3.A — commit: `feat(audio): ambient recipe with coprime ring layers`
-- [ ] `rl/audio/events.py`: Receta A+ (eventos esparcidos con ganancia y limiter propios) — §4.3.A+ — commit: `feat(audio): sparse event layer`
-- [ ] `rl/audio/functional.py`: secciones, `bed_min_s`, anillo, tile sin repetir secciones contiguas — §4.3.B — commit: `feat(audio): functional recipe`
-- [ ] `rl/audio/playlist.py`: ElevenLabs (default) y Suno, normalización por track, crossfade, −14 LUFS, `timestamps.txt`, `assembly.exclude` — §4.3.C — commit: `feat(audio): playlist assembly`
-- [ ] `rl/audio/takes.py`: programación dinámica de selección de tomas (solo Suno) + advertencia > 6 dB — §4.3.C — commit: `feat(audio): take selection by dynamic programming`
-- [ ] `rl audio <job> [--assemble-only] [--regen-stale]` — §5 — commit: `feat(cli): add audio command`
-- [ ] Tests con audio sintético (tonos/ruido): anillo sin clic, período combinado, exclude sin regenerar, DP con casos conocidos — commit: `test(audio): synthetic audio pipeline tests`
+- [x] `rl/audio/common.py`: trim de silencio, crossfade, cierre en anillo, medición de LUFS/peak/silencios — §4.3 — commit: `feat(audio): shared ffmpeg audio helpers`
+- [x] `rl/audio/ambient.py`: Receta A (3 capas de largos coprimos en anillo, tile con `aloop`, AAC una vez) — §4.3.A — commit: `feat(audio): ambient recipe with coprime ring layers`
+- [x] `rl/audio/events.py`: Receta A+ (eventos esparcidos con ganancia y limiter propios) — §4.3.A+ — commit: `feat(audio): sparse event layer`
+- [x] `rl/audio/functional.py`: secciones, `bed_min_s`, anillo, tile sin repetir secciones contiguas — §4.3.B — commit: `feat(audio): functional recipe`
+- [x] `rl/audio/playlist.py`: ElevenLabs (default) y Suno, normalización por track, crossfade, −14 LUFS, `timestamps.txt`, `assembly.exclude` — §4.3.C — commit: `feat(audio): playlist assembly`
+- [x] `rl/audio/takes.py`: programación dinámica de selección de tomas (solo Suno) + advertencia > 6 dB — §4.3.C — commit: `feat(audio): take selection by dynamic programming`
+- [x] `rl audio <job> [--assemble-only] [--regen-stale]` — §5 — commit: `feat(cli): add audio command`
+- [x] Tests con audio sintético (tonos/ruido): anillo sin clic, período combinado, exclude sin regenerar, DP con casos conocidos — commit: `test(audio): synthetic audio pipeline tests`
 
 ## Fase 5 — Visual
 - [ ] `rl/visual/still.py` + `rl still <job> [--reroll]` — §4.6 — commit: `feat(visual): still generation`

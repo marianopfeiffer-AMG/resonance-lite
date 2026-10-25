@@ -70,3 +70,7 @@ class ProviderError(RlError):
     def __init__(self, message: str, *, hint: str | None = None, retryable: bool = False) -> None:
         super().__init__(message, hint=hint)
         self.retryable = retryable
+
+
+class StaleItems(RlError):
+    code = ExitCode.STALE

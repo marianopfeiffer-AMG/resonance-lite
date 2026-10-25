@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, NoReturn
 
 from rl import __version__
+from rl.audio.step import AudioStep
 from rl.budget import Budget
 from rl.config import enabled_providers
 from rl.estimate import estimate
@@ -195,6 +196,19 @@ def cmd_budget(args: argparse.Namespace) -> int:
     return ExitCode.OK
 
 
+def cmd_audio(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    state = AudioStep(job, load_plan(job)).run(
+        assemble_only=args.assemble_only, regen_stale=args.regen_stale
+    )
+    assemble = state.get("assemble", {})
+    human = f"Audio ready: {assemble.get('output')} ({assemble.get('duration_s')} s)"
+    for warning in assemble.get("warnings", []):
+        human += f"\n  warning: {warning}"
+    _emit(args, {"status": state.get("status"), "assemble": assemble}, human)
+    return ExitCode.OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="rlite", description="Resonance Lite CLI")
     parser.add_argument("--version", action="version", version=f"rlite {__version__}")
@@ -230,6 +244,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_prov = add("providers", cmd_providers, "list, enable or disable optional providers")
     p_prov.add_argument("action", nargs="?", default="list", choices=["list", "enable", "disable"])
     p_prov.add_argument("name", nargs="?", default="suno")
+
+    p_aud = add("audio", cmd_audio, "generate missing audio items and assemble the bed/mix")
+    p_aud.add_argument("job")
+    p_aud.add_argument("--assemble-only", action="store_true", help="re-assemble, generate nothing")
+    p_aud.add_argument("--regen-stale", action="store_true", help="regenerate changed paid items")
 
     p_bud = add("budget", cmd_budget, "show a job's spend or raise its cap (your terminal only)")
     p_bud.add_argument("action", choices=["show", "allow"])
