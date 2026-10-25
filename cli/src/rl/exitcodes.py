@@ -52,3 +52,21 @@ class StateCorrupt(RlError):
 
 class NeedsApproval(RlError):
     code = ExitCode.NEEDS_APPROVAL
+
+
+class BudgetExceeded(RlError):
+    code = ExitCode.BUDGET
+
+
+class QuotaExhausted(RlError):
+    code = ExitCode.QUOTA
+
+
+class ProviderError(RlError):
+    """A provider call failed. `retryable` tells the orchestrator whether retrying is safe."""
+
+    code = ExitCode.PROVIDER
+
+    def __init__(self, message: str, *, hint: str | None = None, retryable: bool = False) -> None:
+        super().__init__(message, hint=hint)
+        self.retryable = retryable

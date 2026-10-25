@@ -1,0 +1,30 @@
+# Provider pricing used for estimates. Verified 2026-10; update the date when you re-check.
+# Prices change: `rlite estimate` asks Higgsfield for live costs when its CLI is logged in.
+verified: "2026-10-25"
+
+elevenlabs:
+  # USD per credit by plan (plan price / monthly credits).
+  usd_per_credit:
+    free: 0.0
+    starter: 0.0002      # 6 USD / 30k
+    creator: 0.000182    # 22 USD / 121k
+    pro: 0.000165        # 99 USD / 600k
+  music_credits_per_minute: 900
+  # Unverified: sources disagree (11 vs 40 credits/s). Conservative value until calibrated.
+  sfx_credits_per_second: 40
+  sfx_clip_seconds: 22
+
+apiframe:
+  usd_per_credit: 0.00975  # Basic 39 USD / 4000
+  suno_credits_per_generation: 11
+  regeneration_margin: 0.15
+
+higgsfield:
+  usd_per_credit:
+    starter: 0.0704        # 19 USD / 270
+    plus: 0.0613
+    ultra: 0.0525
+  credits:                 # fallback when live `generate cost` is unavailable
+    nano_banana_2_2k: 2
+    kling3_0_5s_pro: 7.5
+    kling3_0_5s_std: 6.25

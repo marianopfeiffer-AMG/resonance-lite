@@ -56,7 +56,7 @@ You need access to the private repo and git credentials on your machine (`gh aut
 /resonance-lite setup
 ```
 Claude checks your machine and tells you exactly what to run for anything missing. Two things happen **outside** the chat:
-- **Your API key.** Open a separate terminal and run `rlite init`, or copy the key and run `rlite init --from-clipboard`. **Never paste keys into the Claude chat.**
+- **Your API key.** Each user brings their own. Open a separate terminal and run `rlite key set elevenlabs` (hidden prompt), or copy the key and run `rlite key set elevenlabs --from-clipboard`. Keys are stored in your OS keychain. **Never paste keys into the Claude chat**: Claude is instructed not to accept them, and `rlite` refuses to read keys when it is not running in your own terminal.
 - **Higgsfield login** (optional): `higgsfield auth login`.
 
 **3. Make a test video** (~10 min, under USD 1)

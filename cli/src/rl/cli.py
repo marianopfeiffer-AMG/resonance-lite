@@ -8,11 +8,16 @@ from pathlib import Path
 from typing import Any, NoReturn
 
 from rl import __version__
+from rl.budget import Budget
 from rl.config import enabled_providers
-from rl.exitcodes import ExitCode, RlError
+from rl.estimate import estimate
+from rl.exitcodes import ConfigError, ExitCode, RlError
 from rl.hashing import plan_hash
 from rl.paths import jobs_dir, resolve_job
 from rl.plan import load_plan, new_job_id, skeleton
+from rl.providers import registry
+from rl.providers.higgsfield import Higgsfield
+from rl.secrets import KNOWN_KEYS, delete_secret, has_secret, prompt_secret, set_secret
 from rl.stage import derive_stage
 from rl.state import StateStore, now_iso
 from rl.validate import validate_plan
@@ -112,6 +117,84 @@ def cmd_status(args: argparse.Namespace) -> int:
     return ExitCode.OK
 
 
+def cmd_estimate(args: argparse.Namespace) -> int:
+    job = resolve_job(args.job)
+    plan = load_plan(job)
+    result = estimate(plan, live=None if args.offline else Higgsfield())
+    if args.monthly:
+        result["monthly"] = {
+            "videos": args.monthly,
+            "usd": round(result["total_usd"] * args.monthly, 2),
+            "credits": {k: v["credits"] * args.monthly for k, v in result["providers"].items()},
+        }
+    lines = [f"Estimate for {job.name}: ~USD {result['total_usd']:.2f}"]
+    lines += [
+        f"  {name}: {p['credits']} credits ≈ USD {p['usd']:.2f}"
+        for name, p in result["providers"].items()
+    ]
+    lines.append(f"  time: {result['time_minutes']['low']}-{result['time_minutes']['high']} min")
+    lines.append(
+        f"  disk: master {result['disk_gb']['master']} GB, peak {result['disk_gb']['peak']} GB"
+    )
+    if "monthly" in result:
+        lines.append(
+            f"  {args.monthly} videos/month ≈ USD {result['monthly']['usd']:.2f} "
+            "(plus subscriptions)"
+        )
+    lines += [f"  note: {n}" for n in result["notes"]]
+    _emit(args, result, "\n".join(lines))
+    return ExitCode.OK
+
+
+def cmd_key(args: argparse.Namespace) -> int:
+    if args.action == "status":
+        state = {name: has_secret(name) for name in KNOWN_KEYS}
+        human = "\n".join(f"{n}: {'configured' if ok else 'missing'}" for n, ok in state.items())
+        _emit(args, {"keys": state}, human)
+        return ExitCode.OK
+    if not args.provider:
+        raise ConfigError("Name the provider, e.g. `rlite key set elevenlabs`.")
+    if args.action == "delete":
+        delete_secret(args.provider)
+        _emit(
+            args, {"deleted": args.provider}, f"Deleted the {args.provider} key from this computer."
+        )
+        return ExitCode.OK
+    value = prompt_secret(args.provider, from_clipboard=args.from_clipboard)
+    where = set_secret(args.provider, value, allow_file=args.allow_file_storage)
+    note = " (0600 file: no OS keychain on this system)" if where == "file" else ""
+    _emit(
+        args, {"saved": args.provider, "storage": where}, f"Saved your {args.provider} key{note}."
+    )
+    return ExitCode.OK
+
+
+def cmd_providers(args: argparse.Namespace) -> int:
+    if args.action == "enable":
+        registry.enable(args.name)
+    elif args.action == "disable":
+        registry.disable(args.name)
+    rows = registry.status()
+    human = "\n".join(f"{r['name']}: {'enabled' if r['enabled'] else 'disabled'}" for r in rows)
+    _emit(args, {"providers": rows}, human)
+    return ExitCode.OK
+
+
+def cmd_budget(args: argparse.Namespace) -> int:
+    budget = Budget(resolve_job(args.job))
+    if args.action == "allow":
+        if args.usd is None or args.usd <= 0:
+            raise ConfigError("Pass a positive amount with --usd.")
+        budget.allow_extra(args.usd)
+    summary = budget.summary()
+    human = (
+        f"job: USD {summary['job_usd']:.2f} of {summary['job_cap_usd']:.2f}  |  "
+        f"month: USD {summary['month_usd']:.2f} of {summary['month_cap_usd']:.2f}"
+    )
+    _emit(args, summary, human)
+    return ExitCode.OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="rlite", description="Resonance Lite CLI")
     parser.add_argument("--version", action="version", version=f"rlite {__version__}")
@@ -130,6 +213,28 @@ def build_parser() -> argparse.ArgumentParser:
     p_new.add_argument("--mode", choices=["ambient", "functional", "playlist"])
     add("validate", cmd_validate, "validate a job's plan").add_argument("job")
     add("status", cmd_status, "show one job or list all jobs").add_argument("job", nargs="?")
+
+    p_est = add("estimate", cmd_estimate, "estimate cost, time and disk for a job")
+    p_est.add_argument("job")
+    p_est.add_argument("--monthly", type=int, metavar="N", help="project N videos per month")
+    p_est.add_argument("--offline", action="store_true", help="skip live Higgsfield cost lookup")
+
+    p_key = add("key", cmd_key, "manage YOUR provider API keys (run in your own terminal)")
+    p_key.add_argument("action", choices=["set", "status", "delete"])
+    p_key.add_argument("provider", nargs="?", choices=list(KNOWN_KEYS))
+    p_key.add_argument(
+        "--from-clipboard", action="store_true", help="read the key from the clipboard"
+    )
+    p_key.add_argument("--allow-file-storage", action="store_true", help="0600 file if no keychain")
+
+    p_prov = add("providers", cmd_providers, "list, enable or disable optional providers")
+    p_prov.add_argument("action", nargs="?", default="list", choices=["list", "enable", "disable"])
+    p_prov.add_argument("name", nargs="?", default="suno")
+
+    p_bud = add("budget", cmd_budget, "show a job's spend or raise its cap (your terminal only)")
+    p_bud.add_argument("action", choices=["show", "allow"])
+    p_bud.add_argument("job")
+    p_bud.add_argument("--usd", type=float)
     return parser
 
 

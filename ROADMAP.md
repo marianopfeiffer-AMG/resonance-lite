@@ -12,7 +12,7 @@
 - [x] **(Nano)** Crear el repo **privado** `resonance-lite` bajo ese owner — §10.0.1.
 - [ ] **(Nano)** Verificar que `resonance-lite` y `rlite` están libres en PyPI y registrar un *pending publisher* (Trusted Publishing) sin publicar nada — §8.1, SUPUESTO-9.
 - [ ] **(Nano)** Elegir el canal de reportes de seguridad (recomendado: GitHub Private Vulnerability Reporting) — ABIERTO-6.
-- [ ] **(Nano)** Crear una cuenta de ElevenLabs dedicada para tests (plan Starter, tope bajo). **No** usar la de Resonance — §15.3.
+- [ ] ~~Crear una cuenta de ElevenLabs dedicada para tests~~ → **no hace falta** (decisión de Nano 2026-10-25: el sistema le pide las claves a cada usuario; ninguna clave de Nano entra al repo ni a sus secrets). El smoke test nocturno queda opcional y apagado por defecto (Fase 13).
 - [ ] **(Nano)** Decidir si hay más testers además del amigo — ABIERTO-7.
 - [ ] **(Nano)** Correr la prueba de bloqueo de privados (subir un video de prueba por API e intentar publicarlo) — ABIERTO-1.
 
@@ -44,16 +44,16 @@
 - [x] `rl/cli.py`: `new`, `validate`, `status` (humano y `--json`) — §5 — commit: `feat(cli): add new, validate and status commands`
 
 ## Fase 3 — Proveedores
-- [ ] `rl/providers/base.py`: interfaces `SoundProvider`, `MusicProvider`, `ImageProvider`/`VideoProvider`, `Publisher`, con `resumable` y tabla de errores → código — §7.0 — commit: `feat(providers): define provider interfaces`
-- [ ] `rl/secrets.py`: `keyring` con fallback a archivo 0600 (con advertencia) y enmascarado en logs — §8 — commit: `feat(core): keychain-backed secrets with masked logging`
-- [ ] `rl/budget.py`: reserva antes de cada llamada, tope por job y mes en USD, `--over-budget` con confirmación TTY y registro en `job.log` — §8 — commit: `feat(core): per-call budget enforcement`
-- [ ] `rl/providers/elevenlabs.py`: SFX (`loop`), Music (≤ 600 s, `force_instrumental`), backoff, `quota_exceeded` → 22, validación de respuesta, saldo — §7.1 — commit: `feat(providers): add elevenlabs provider`
-- [ ] `rl/providers/higgsfield.py`: `create --json` → guardar id → `wait <id>`, `generate cost`, `account status`, chequeo de versión del CLI — §7.3 — commit: `feat(providers): add higgsfield provider`
-- [ ] `rl/providers/apiframe.py`: `requests` + UA de navegador, submit sin reintento ciego, poll, reanudación por `jobId`, deshabilitado por defecto — §7.2 — commit: `feat(providers): add optional apiframe suno provider`
-- [ ] `rl/providers/registry.py` + `rl providers list|enable|disable` (reconocimiento de riesgos en TTY) — §7.0 — commit: `feat(cli): manage optional providers`
-- [ ] `rl/pricing.yaml` con fecha + conversión de créditos a USD por plan — §7.1, §13.1 — commit: `feat(estimate): add dated pricing table`
-- [ ] `rl/estimate.py` + `rl estimate [--monthly N --mode m]`: créditos, USD, tiempo, disco pico, comparación con saldo — §5, §13.1 — commit: `feat(estimate): cost, time and disk estimation`
-- [ ] Tests de contrato con mocks por proveedor (incluye: el timeout no re-crea el job; quota → 22; Suno sin activar → validate falla) — commit: `test(providers): add contract tests with mocks`
+- [x] `rl/providers/base.py`: interfaces `SoundProvider`, `MusicProvider`, `ImageProvider`/`VideoProvider`, `Publisher`, con `resumable` y tabla de errores → código — §7.0 — commit: `feat(providers): define provider interfaces`
+- [x] `rl/secrets.py`: claves **del usuario final** en el llavero de su SO (con fallback a archivo 0600 opcional), cargadas por él con `rlite key set <proveedor>` en su propia terminal o desde el portapapeles; nunca por el chat; enmascarado en logs — §8 — commit: `feat(core): keychain-backed secrets with masked logging`
+- [x] `rl/budget.py`: reserva antes de cada llamada, tope por job y mes en USD, `--over-budget` con confirmación TTY y registro en `job.log` — §8 — commit: `feat(core): per-call budget enforcement`
+- [x] `rl/providers/elevenlabs.py`: SFX (`loop`), Music (≤ 600 s, `force_instrumental`), backoff, `quota_exceeded` → 22, validación de respuesta, saldo — §7.1 — commit: `feat(providers): add elevenlabs provider`
+- [x] `rl/providers/higgsfield.py`: `create --json` → guardar id → `wait <id>`, `generate cost`, `account status`, chequeo de versión del CLI — §7.3 — commit: `feat(providers): add higgsfield provider`
+- [x] `rl/providers/apiframe.py`: `requests` + UA de navegador, submit sin reintento ciego, poll, reanudación por `jobId`, deshabilitado por defecto — §7.2 — commit: `feat(providers): add optional apiframe suno provider`
+- [x] `rl/providers/registry.py` + `rl providers list|enable|disable` (reconocimiento de riesgos en TTY) — §7.0 — commit: `feat(cli): manage optional providers`
+- [x] `rl/pricing.yaml` con fecha + conversión de créditos a USD por plan — §7.1, §13.1 — commit: `feat(estimate): add dated pricing table`
+- [x] `rl/estimate.py` + `rl estimate [--monthly N --mode m]`: créditos, USD, tiempo, disco pico, comparación con saldo — §5, §13.1 — commit: `feat(estimate): cost, time and disk estimation`
+- [x] Tests de contrato con mocks por proveedor (incluye: el timeout no re-crea el job; quota → 22; Suno sin activar → validate falla) — commit: `test(providers): add contract tests with mocks`
 
 ## Fase 4 — Audio
 - [ ] `rl/audio/common.py`: trim de silencio, crossfade, cierre en anillo, medición de LUFS/peak/silencios — §4.3 — commit: `feat(audio): shared ffmpeg audio helpers`
@@ -110,7 +110,7 @@
 - [ ] `examples/`: un `plan.json` por modo + `channel.yaml` + imagen para la demo `byo` (generada por Nano, MIT) — commit: `docs: add examples`
 
 ## Fase 11 — Prueba real de Nano (antes de dárselo al amigo)
-- [ ] **(Nano)** Instalar desde cero en su Mac siguiendo solo el README (repo privado) y verificar SUPUESTO-10.
+- [ ] **(Nano)** Instalar desde cero en su Mac siguiendo solo el README (repo privado) y verificar SUPUESTO-10. Nano carga **su propia** key como cualquier usuario (`rlite key set elevenlabs` en su terminal); nunca se la pasa a Claude ni queda en el repo.
 - [ ] **(Nano)** Correr `demo` y un video por modo con presupuesto bajo (`RL_MAX_MIN`, `RL_MAX_TRACKS`).
 - [ ] **(Nano)** Medir el costo real de SFX y actualizar `pricing.yaml` — SUPUESTO-2 — commit: `fix(estimate): calibrate elevenlabs sfx pricing`
 - [ ] **(Nano)** Escucha de prueba de la Receta A+ (tormenta) — SUPUESTO-5.
@@ -127,7 +127,7 @@
 ## Fase 13 — Lanzamiento público
 - [ ] Ejecutar el checklist de §10.0.4 (gitleaks sobre el historial, trusted publisher, `cli-v1.0.0` a PyPI, README con PyPI, Discussions/stale/smoke test/CodeQL, repo público, migración del amigo).
 - [ ] Workflow de release a PyPI con environment `pypi` + revisor + attestations — §8.1 — commit: `ci: add pypi trusted publishing release`
-- [ ] Workflow de smoke test nocturno (cuenta ElevenLabs dedicada) — §15.3 — commit: `ci: add nightly provider smoke test`
+- [ ] Workflow de smoke test nocturno **opcional**: solo corre si el mantenedor configura por su cuenta el secret `RL_SECRET_ELEVENLABS`; sin él, se saltea sin fallar — §15.3 — commit: `ci: add optional nightly provider smoke test`
 - [ ] `SUPPORT.md` versión pública ("best effort, sin SLA") — §15.2 — commit: `docs: public support policy`
 - [ ] **(Nano)** Anuncio (canal Resonance, redes).
 
