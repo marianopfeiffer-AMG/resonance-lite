@@ -11,6 +11,8 @@ The toolkit behind the [Resonance](#credits) channel, packaged so you can run it
 
 > 🧪 **Private beta.** You are one of the first testers. Please report everything that confuses you, even if it seems small (see [Beta feedback](#beta-feedback)).
 
+> Versión en español: [README.es.md](README.es.md)
+
 ---
 
 ## What it does
@@ -43,30 +45,42 @@ The setup installs everything else (`uv`, `ffmpeg`).
 
 ## Install (beta)
 
-You need access to the private repo and git credentials on your machine (`gh auth login`).
+You need access to this private repository and GitHub credentials on your computer
+(`gh auth login`, or an SSH key). You also need [uv](https://docs.astral.sh/uv/).
 
-**1. In Claude Code, add the plugin**
+**1. Install the CLI** (in your terminal)
+```bash
+uv tool install "resonance-lite[stabilize] @ git+https://github.com/marianopfeiffer-AMG/resonance-lite@cli-v0.9.0#subdirectory=cli"
 ```
-/plugin marketplace add <owner>/resonance-lite
+
+**2. Add the plugin** (in Claude Code)
+```
+/plugin marketplace add marianopfeiffer-AMG/resonance-lite
 /plugin install resonance-lite@resonance-lite
 ```
 
-**2. Run the guided setup**
+**3. Run the guided setup** (in Claude Code)
 ```
 /resonance-lite setup
 ```
-Claude checks your machine and tells you exactly what to run for anything missing. Two things happen **outside** the chat:
-- **Your API key.** Each user brings their own. Open a separate terminal and run `rlite key set elevenlabs` (hidden prompt), or copy the key and run `rlite key set elevenlabs --from-clipboard`. Keys are stored in your OS keychain. **Never paste keys into the Claude chat**: Claude is instructed not to accept them, and `rlite` refuses to read keys when it is not running in your own terminal.
+Claude checks your machine and tells you exactly what to run for anything missing. Two things
+happen **outside** the chat, in a separate terminal window:
+- **Your API key.** Each user brings their own. Run `rlite key set elevenlabs` (hidden prompt), or
+  copy the key and run `rlite key set elevenlabs --from-clipboard`. Keys are stored in your OS
+  keychain. **Never paste keys into the Claude chat**: Claude is instructed not to accept them, and
+  `rlite` refuses to read keys when it is not running in your own terminal.
 - **Higgsfield login** (optional): `higgsfield auth login`.
 
-**3. Make a test video** (~10 min, under USD 1)
+**4. Make a test video** (~10 min, under USD 1)
 ```
 /resonance-lite demo
 ```
 
 > If `/resonance-lite` collides with another command, use the full name: `/resonance-lite:resonance-lite`.
 
----
+**Updating during the beta:** Nano will tell you the new tag. Then run
+`uv tool install --force "resonance-lite[stabilize] @ git+https://github.com/marianopfeiffer-AMG/resonance-lite@cli-vX.Y.Z#subdirectory=cli"`.
+The plugin updates itself if you enabled auto-update (`/plugin` → Marketplaces → resonance-lite).
 
 ## Usage
 
@@ -108,7 +122,7 @@ Monthly subscriptions are the real floor, because several providers' credits exp
 - 4 ambient videos/month: ~USD 40–45.
 - 4 music videos/month: ~USD 115–120 (needs ElevenLabs Pro).
 
-Run `rlite estimate --monthly 4 --mode ambient` for your own numbers. Details in [docs/costs.md](docs/costs.md).
+Run `rlite estimate <job> --monthly 4` for your own numbers. Details in [docs/costs.md](docs/costs.md).
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "resonance-lite",
   "displayName": "Resonance Lite",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "description": "Make long-form functional sound videos for YouTube (rain, fireplace, sleep piano, lofi playlists) from a single prompt",
   "author": {
     "name": "Mariano Pfeiffer",

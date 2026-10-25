@@ -103,11 +103,11 @@
 - [ ] Revisión manual de Nano de todo el knowledge portado **(Nano)** — §15.4
 
 ## Fase 10 — Documentación y ejemplos
-- [ ] `README.md` final (ver el borrador en la raíz) con comandos de instalación de la beta — §10.0.1 — commit: `docs: finalize readme for beta`
-- [ ] `README.es.md` (traducción) — commit: `docs: add spanish readme`
-- [ ] `docs/ARCHITECTURE.md` sanitizado desde el SPEC (sin infraestructura de Nano) — §10.3 — commit: `docs: add public architecture overview`
-- [ ] `docs/costs.md`, `docs/youtube-policy.md`, `docs/upload-in-studio.md`, `docs/troubleshooting.md`, `docs/providers/*.md` — commit: `docs: add operating guides`
-- [ ] `examples/`: un `plan.json` por modo + `channel.yaml` + imagen para la demo `byo` (generada por Nano, MIT) — commit: `docs: add examples`
+- [x] `README.md` final (ver el borrador en la raíz) con comandos de instalación de la beta — §10.0.1 — commit: `docs: finalize readme for beta`
+- [x] `README.es.md` (traducción) — commit: `docs: add spanish readme`
+- [x] `docs/ARCHITECTURE.md` sanitizado desde el SPEC (sin infraestructura de Nano) — §10.3 — commit: `docs: add public architecture overview`
+- [x] `docs/costs.md`, `docs/youtube-policy.md`, `docs/upload-in-studio.md`, `docs/troubleshooting.md`, `docs/providers/*.md` — commit: `docs: add operating guides`
+- [x] `examples/`: un `plan.json` por modo (la demo sin Higgsfield usa una imagen del propio usuario: el plugin no puede llevar binarios) — commit: `docs: add examples`
 
 ## Fase 11 — Prueba real de Nano (antes de dárselo al amigo)
 - [ ] **(Nano)** Instalar desde cero en su Mac siguiendo solo el README (repo privado) y verificar SUPUESTO-10. Nano carga **su propia** key como cualquier usuario (`rlite key set elevenlabs` en su terminal); nunca se la pasa a Claude ni queda en el repo.
