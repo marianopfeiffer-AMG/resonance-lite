@@ -1,0 +1,41 @@
+name: Beta feedback
+description: One per finished video during the private beta
+labels: [beta-feedback]
+body:
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options: [ambient, functional, playlist, demo]
+    validations:
+      required: true
+  - type: dropdown
+    id: visual
+    attributes:
+      label: Visual tier
+      options: [cinemagraph, still, byo]
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Total time (idea → final folder)
+      placeholder: "1h 40m"
+  - type: textarea
+    id: stuck
+    attributes:
+      label: Where did you get stuck or need help?
+  - type: input
+    id: cost
+    attributes:
+      label: Estimated vs real cost (check provider dashboards)
+      placeholder: "estimated USD 5.20 / real USD 5.80"
+  - type: dropdown
+    id: quality
+    attributes:
+      label: Quality (1-5)
+      options: ["1", "2", "3", "4", "5"]
+  - type: textarea
+    id: change
+    attributes:
+      label: What would you change?

@@ -1,0 +1,14 @@
+{
+  "name": "resonance-lite",
+  "description": "Long-form functional sound videos for YouTube from a single prompt",
+  "owner": {
+    "name": "Mariano Pfeiffer"
+  },
+  "plugins": [
+    {
+      "name": "resonance-lite",
+      "source": "./plugin",
+      "description": "Creative director for functional sound videos: ambient, sleep music and playlists"
+    }
+  ]
+}

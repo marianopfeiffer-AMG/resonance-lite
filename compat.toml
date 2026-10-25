@@ -1,0 +1,5 @@
+# Single source of truth for plugin <-> CLI compatibility.
+# The release workflow copies this range into plugin.json (metadata.requires_cli)
+# and into SKILL.md, where the skill enforces it via `rlite --version`.
+[cli]
+requires = ">=0.1,<1.0"

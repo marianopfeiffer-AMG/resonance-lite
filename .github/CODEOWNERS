@@ -1,0 +1,4 @@
+# Changes to what Claude does on users' machines and to paid provider calls need maintainer review.
+/plugin/                     @marianopfeiffer-AMG
+/cli/src/rl/providers/       @marianopfeiffer-AMG
+/.github/                    @marianopfeiffer-AMG
